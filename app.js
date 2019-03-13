@@ -9,7 +9,7 @@ let session = require('koa-generic-session')
 let redisStore = require('koa-redis')
 let daoLog = require('./dao/log')
 let env = require('./config/env')
-let redis = require('./config/redis')
+// let redis = require('./config/redis')
 let kue = require('kue')
 
 let router = new Router()
@@ -21,42 +21,44 @@ global.event = new EventEmitter()
 
 require('./utils/event/index')
 
+// FIXME: 消息队列
 // 消息队列
-let queue = kue.createQueue({
-  prefix: 'queue',
-  redis: {
-    port: env.redis.port,
-    host: env.redis.host,
-    auth: env.redis.password,
-    db: 3,
-    options: {}
-  }
-})
+// let queue = kue.createQueue({
+//   prefix: 'queue',
+//   redis: {
+//     port: env.redis.port,
+//     host: env.redis.host,
+//     auth: env.redis.password,
+//     db: 3,
+//     options: {}
+//   }
+// })
 
-queue.process('email', function(job, done) {
-  console.log('正在处理队列任务: ' + job.id + '...')
-  setTimeout(function() {
-    done()
-  }, 1000)
-})
+// queue.process('email', function(job, done) {
+//   console.log('正在处理队列任务: ' + job.id + '...')
+//   setTimeout(function() {
+//     done()
+//   }, 1000)
+// })
 
-queue
-  .on('job enqueue', function(id, type) {
-    console.log('任务 %s 已经加入队列, %s', id, type)
-  })
-  .on('job complete', function(id, result) {
-    kue.Job.get(id, function(err, job) {
-      if (err) return
-      job.remove(function(err) {
-        if (err) throw err
-        console.log('队列任务已经完成并移除: %d', job.id)
-      })
-    })
-  })
+// queue
+//   .on('job enqueue', function(id, type) {
+//     console.log('任务 %s 已经加入队列, %s', id, type)
+//   })
+//   .on('job complete', function(id, result) {
+//     kue.Job.get(id, function(err, job) {
+//       if (err) return
+//       job.remove(function(err) {
+//         if (err) throw err
+//         console.log('队列任务已经完成并移除: %d', job.id)
+//       })
+//     })
+//   })
 
 // 指定端口
 let port = process.env.PORT || 3000
 
+// FIXME: 定时
 // 引入定时任务，注意：引入即生效
 // require('./utils/schedule/backupDB');
 // require('./utils/schedule/todo');
@@ -74,6 +76,7 @@ let error = require('./utils/midware/error')
 app.use(error)
 
 // 引入自定义的用户认证中间件
+// FIXME: 认证
 let auth = require('./utils/midware/auth')
 app.use(auth)
 
@@ -100,7 +103,6 @@ app.context.log = function(key = 'untitled log', value = '') {
   })
 }
 
-// 使用 Redis 存储 session，到期 Redis 自动删除
 app.use(
   session({
     key: 'SSID',
@@ -111,15 +113,31 @@ app.use(
       maxAge: 24 * 60 * 60 * 1000, //cookie 有效期1天，默认为 session 的 ttl
       overwrite: true,
       signed: true
-    },
-    store: redisStore({
-      host: env.redis.host,
-      port: env.redis.port,
-      auth_pass: env.redis.password,
-      db: 0 // session 放在 db0,log 放在 db1
-    })
+    }
   })
 )
+
+// FIXME: Redis
+// 使用 Redis 存储 session，到期 Redis 自动删除
+// app.use(
+//   session({
+//     key: 'SSID',
+//     rolling: true,
+//     cookie: {
+//       path: '/',
+//       httpOnly: true,
+//       maxAge: 24 * 60 * 60 * 1000, //cookie 有效期1天，默认为 session 的 ttl
+//       overwrite: true,
+//       signed: true
+//     },
+//     store: redisStore({
+//       host: env.redis.host,
+//       port: env.redis.port,
+//       auth_pass: env.redis.password,
+//       db: 0 // session 放在 db0,log 放在 db1
+//     })
+//   })
+// )
 
 // xml 解析的支持
 app.use(xmlParser())

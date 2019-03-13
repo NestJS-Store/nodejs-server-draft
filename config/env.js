@@ -2,10 +2,10 @@ let env = {
   dev: {
     mysql: {
       logging: true, // 是否打印数据库查询日志
-      dbname: '',
-      username: '',
-      password: '',
-      host: '',
+      dbname: 'test',
+      username: 'root',
+      password: '123456',
+      host: '10.96.89.168',
       port: 3306,
       baseUrl: ''
     },
