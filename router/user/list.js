@@ -7,12 +7,21 @@ router.post('/', async function (ctx, next) {
 
   let get = ctx.request.query;
   let post = ctx.request.body;
-  let page = get.page;
-  let pageSize = get.pageSize;
+  let page = post.page;
+  let pageSize = post.pageSize;
 
-  let data = await dao.list(post, page, pageSize);
+  let data = await dao.list({name: post.name}, page, pageSize);
 
-  return ctx.return(0, '', data);
+  const resData = data ? 
+    {
+      count: data.count,
+      data: data.rows,
+      code: 0,
+      page,
+      pageSize
+    }
+    : null
+  return ctx.return(0, '', resData);
 
 });
 

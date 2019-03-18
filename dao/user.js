@@ -5,6 +5,7 @@ let env = require('../config/env')
 let model = require('../models/' + path.basename(__filename, '.js'))
 
 let dao = {
+  // 增加
   add: async function(addJson) {
     let data = await model.create(addJson, {
       logging: env.logging
@@ -12,6 +13,7 @@ let dao = {
     return data
   },
 
+  // 删除
   delete: async function(phone = null) {
     let data = await model.destroy({
       where: {
@@ -22,6 +24,7 @@ let dao = {
     return data
   },
 
+  // 更新
   update: async function(updateJson = {}, whereJson = {}) {
     let data = await model.update(updateJson, {
       where: whereJson,
@@ -30,6 +33,15 @@ let dao = {
     return data
   },
 
+  // 搜索
+  search: async function(whereJson = {}) {
+    let data = await model.findOne({
+      where: whereJson
+    })
+    return data
+  },
+
+  // 分页
   list: async function(whereJson = {}, page = 1, pageSize = 10) {
     let data = await model.findAndCountAll({
       logging: env.logging,
@@ -37,6 +49,8 @@ let dao = {
       offset: pageSize * (page - 1),
       limit: pageSize
     })
+
+    console.info('data', data)
     return data
   },
 
@@ -48,8 +62,8 @@ let dao = {
     return data
   },
 
-  sum: async function(cloum, whereJson) {
-    let data = await model.sum(cloum, {
+  sum: async function(column, whereJson) {
+    let data = await model.sum(column, {
       where: whereJson
     })
     return data
@@ -62,8 +76,8 @@ let dao = {
     return data
   },
 
-  increment: async function(cloumArray = [], whereJson = {}, by = 1) {
-    let data = await model.increment(cloumArray, {
+  increment: async function(columnArray = [], whereJson = {}, by = 1) {
+    let data = await model.increment(columnArray, {
       by: by,
       where: whereJson
     })

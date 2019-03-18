@@ -8,7 +8,21 @@ router.post('/', async function(ctx, next) {
   let get = ctx.request.query
   let post = ctx.request.body
 
-  let data = await dao.add(post)
+
+  const { phone, email } = post
+
+  const existPhone = await dao.search({phone})
+  const existEmail = await dao.search({email})
+
+  let data = {}
+  if (existPhone || existEmail) {
+      data = {
+        code: '-1',
+        message: 'User is Exist!'
+      }
+  } else {
+    data = await dao.add(post)
+  }
 
   return ctx.return(0, '', data)
 })

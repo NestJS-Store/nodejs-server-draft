@@ -8,15 +8,10 @@ let routes = function(router) {
     '/user/reg': './user/reg',
     '/user/list': './user/list',
     '/user/update': './user/update',
+    '/user/search': './user/search',
     '/user/modpwd': './user/modpwd',
     '/user/add': './user/add',
     '/user/delete': './user/delete',
-
-    // ****** sms 常用接口，短信发送 ******
-    '/sms/verify_code': './sms/verify_code',
-
-    // ****** file 常用接口，文件上传 OSS ******
-    // '/file/upload_oss': './file/upload_oss',
 
     // ****** utils 常用接口，数据库备份 ******
     '/utils/db_backup': './utils/db_backup',
@@ -34,18 +29,7 @@ let routes = function(router) {
     // 以下两个接口需要自定义修改，复用非常简单
     '/book/list_with_author': './book/list_with_author', // 这个接口做关联查询，需要研究明白，然后所有的关联查询就非常的轻松
     '/book/search': './book/search', // 模糊搜索接口，需要设置搜索字段
-    '/book/sale_an_author_book': './book/sale_an_author_book',
-
-    // 复制自 book 接口，其他接口完全可以参照
-    '/author/add': './author/add',
-    '/author/list': './author/list',
-    '/author/search': './author/search',
-    '/author/list_include_books': './author/list_include_books',
-
-    // review
-    '/review/add': './review/add',
-    '/review/list': './review/list',
-    '/review/search': './review/search'
+    '/book/sale_an_author_book': './book/sale_an_author_book'
   }
   for (x in controller) {
     router.use(x, require(controller[x]))

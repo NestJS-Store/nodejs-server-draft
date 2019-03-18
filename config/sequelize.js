@@ -2,19 +2,23 @@ const Sequelize = require('sequelize')
 
 const { mysql } = require('./env')
 
-const sequelize = new Sequelize(mysql.dbname, mysql.username, mysql.password, {
-  host: mysql.host,
-  port: mysql.port,
-  dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  timezone: '+08:00',
-  operatorsAliases: false
-})
+const sequelize = new Sequelize(
+  mysql.databaseName, 
+  mysql.username, mysql.password,
+  {
+    host: mysql.host,
+    port: mysql.port,
+    dialect: 'mysql',
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    timezone: '+08:00',
+    operatorsAliases: false
+  }
+)
 
 sequelize
   .authenticate()

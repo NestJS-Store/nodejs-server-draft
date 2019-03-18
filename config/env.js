@@ -2,12 +2,16 @@ let env = {
   dev: {
     mysql: {
       logging: true, // 是否打印数据库查询日志
-      dbname: 'test',
+      databaseName: 'test',
       username: 'root',
       password: '123456',
       host: '10.96.89.168',
       port: 3306,
-      baseUrl: ''
+      baseUrl: '',
+
+      // table is need to force rewrite 
+      forceUpdateModel: true 
+
     },
     oss: {
       region: '',
@@ -32,12 +36,14 @@ let env = {
   online: {
     mysql: {
       logging: false, // 是否打印数据库查询日志
-      dbname: '',
+      databaseName: '',
       username: '',
       password: '',
       host: '',
       port: 3306,
-      baseUrl: ''
+      baseUrl: '',
+      // table is need to force rewrite 
+     forceUpdateModel: false,
     },
     oss: {
       region: '',

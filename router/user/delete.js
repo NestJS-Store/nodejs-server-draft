@@ -8,9 +8,19 @@ router.post('/', async function(ctx, next) {
   let get = ctx.request.query
   let post = ctx.request.body
 
-  let data = await dao.delete(post.phone || null)
+  const isExisted = await dao.search({ phone: post.phone})
 
-  return ctx.return(0, '', data)
+  console.info('isExisted', isExisted)
+
+  if (isExisted) {
+    let data = await dao.delete(post.phone)
+    return ctx.return(0, '', data)
+  } else {
+    return ctx.return(0, '', {
+      message: 'User Is Not Existed!'
+    })
+  }
+
 })
 
 module.exports = router.routes()
