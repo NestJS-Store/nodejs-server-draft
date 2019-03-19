@@ -9,7 +9,12 @@ router.post('/', async function (ctx, next) {
   let get = ctx.request.query;
   let post = ctx.request.body;
 
-  let data = await dao.update(post, get);
+  // 暂时通过手机作为唯一标识进行更新
+  const where = {
+    phone: post.phone,
+  }
+
+  let data = await dao.update(post, where);
 
   return ctx.return(0, '', data);
 
