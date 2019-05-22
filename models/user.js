@@ -18,8 +18,7 @@ const model = sequelize.define(
 
     phone: {
       type: sequelize.Sequelize.BIGINT,
-      comment: '手机号',
-      // unique: true
+      comment: '手机号'
     },
 
     name: {

@@ -50,10 +50,10 @@ let dao = {
       limit: pageSize
     })
 
-    console.info('data', data)
     return data
   },
 
+  // 搜索所有
   all: async function(whereJson = {}) {
     let data = await model.findAndCountAll({
       logging: env.logging,

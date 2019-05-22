@@ -2,6 +2,8 @@ let path = require('path');
 let router = require('koa-router')();
 let Sequelize = require('sequelize');
 
+const Op = Sequelize.Op
+
 let dao = require('../../dao/' + path.basename(__dirname));
 
 router.post('/', async function (ctx, next) {
@@ -14,9 +16,18 @@ router.post('/', async function (ctx, next) {
     phone: post.phone,
   }
 
-  let data = await dao.update(post, where);
+  const isExisted = await dao.search({
+    phone: {
+      [Op.like]: '%' + post.phone + '%'
+    }
+  })
 
-  return ctx.return(0, '', data);
+  if (isExisted) {
+    await dao.update(post, where);
+    return ctx.return(0, 'User updated success!', {});
+  } else {
+    return ctx.return(-1, "User isn't found!", {});
+  }
 
 });
 

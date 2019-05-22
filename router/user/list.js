@@ -1,6 +1,9 @@
 let path = require('path');
 let router = require('koa-router')();
 
+let Sequelize = require('sequelize')
+const Op = Sequelize.Op
+
 let dao = require('../../dao/' + path.basename(__dirname));
 
 router.post('/', async function (ctx, next) {
@@ -10,18 +13,30 @@ router.post('/', async function (ctx, next) {
   let page = post.page;
   let pageSize = post.pageSize;
 
-  let data = await dao.list({name: post.name}, page, pageSize);
+  const whereJson = {
+    name: {
+      [Op.like]: '%' + post.name + '%'
+    }
+  }
 
-  const resData = data ? 
+  let res = await dao.list(whereJson, page, pageSize);
+
+  const data = 
+  res ? 
     {
-      count: data.count,
-      data: data.rows,
+      count: res.count,
+      data: res.rows,
       code: 0,
       page,
       pageSize
     }
     : null
-  return ctx.return(0, '', resData);
+
+    if  (data) {
+      return ctx.return(0, 'List success!', data);
+    } else {
+      return ctx.return(-1, 'List failed!', data);
+    }
 
 });
 

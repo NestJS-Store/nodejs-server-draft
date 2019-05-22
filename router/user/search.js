@@ -10,11 +10,6 @@ router.post('/', async function(ctx, next) {
 
   const { phone, email } = post
 
-  const isExisted = {
-    code: '-1',
-    message: 'User Search Query Is Not Valid!'
-  }
-
   let whereJson = {}
   if (phone) {
     whereJson = {
@@ -29,12 +24,16 @@ router.post('/', async function(ctx, next) {
       }
     }
   } else {
-    return ctx.return(0, '', isExisted)
+    return ctx.return(-1, 'User Search Query Is Not Valid!', {})
   }
 
   let data = await dao.search(whereJson)
 
-  return ctx.return(0, '', data)
+  if(data) {
+    return ctx.return(0, 'Search success', data)
+  } else {
+    return ctx.return(-1, "User isn't Found!", {})
+  }
 })
 
 module.exports = router.routes()
