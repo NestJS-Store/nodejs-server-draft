@@ -4,13 +4,13 @@ let env = {
       logging: true, // 是否打印数据库查询日志
       databaseName: 'test',
       username: 'root',
-      password: '123456',
-      host: '10.96.89.168',
+      password: '123456789',
+      host: '39.106.163.208',
       port: 3306,
       baseUrl: '',
 
-      // table is need to force rewrite 
-      forceUpdateModel: true 
+      // table is need to force rewrite
+      forceUpdateModel: true
 
     },
     oss: {
@@ -42,7 +42,7 @@ let env = {
       host: '',
       port: 3306,
       baseUrl: '',
-      // table is need to force rewrite 
+      // table is need to force rewrite
      forceUpdateModel: false,
     },
     oss: {
