@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 17:31:28
+ * @LastEditTime: 2019-08-13 20:07:44
  */
 let path = require('path');
 let router = require('koa-router')();
@@ -12,20 +12,19 @@ const STATUS = require('../../status/index');
 
 let dao = require('../../dao/' + path.basename(__dirname));
 
-router.post('/', async function (ctx, next) {
+router.get('/', async function (ctx, next) {
 
   let get = ctx.request.query;
-  let post = ctx.request.body;
-  let page = post.page;
-  let pageSize = post.pageSize;
+  let page = get.page;
+  let pageSize = get.pageSize;
 
   const whereJson = {
     name: {
-      [Op.like]: '%' + post.name + '%'
+      [Op.like]: '%' + get.name + '%'
     }
   }
 
-  let res = await dao.list(whereJson, page, pageSize);
+  let res = await dao.list(whereJson, + page, + pageSize);
 
   const data =
   res ?

@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 15:07:27
+ * @LastEditTime: 2019-08-13 20:25:39
  */
 let path = require('path')
 let fs = require('fs')
@@ -60,7 +60,7 @@ require('./utils/event/index')
 //   })
 
 // 指定端口
-let port = process.env.PORT || 3000
+let port = process.env.PORT || 8868
 
 // FIXME: 定时
 // 引入定时任务，注意：引入即生效

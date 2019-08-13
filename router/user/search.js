@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 17:50:41
+ * @LastEditTime: 2019-08-13 17:05:02
  */
 let path = require('path')
 let router = require('koa-router')()
@@ -20,10 +20,12 @@ router.get('/', async function(ctx, next) {
   const { email } = body
 
   let whereJson = {}
+
   if (email) {
     whereJson = {
-      email: email
+      email
     }
+
   } else {
     return ctx.return(STATUS.Normal.NOT_VALID_QUERY, 'User Search Query Is Not Valid!', {})
   }

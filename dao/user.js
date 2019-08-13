@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-13 11:03:37
+ * @LastEditTime: 2019-08-13 20:16:28
  */
 let Sequelize = require('sequelize')
 let path = require('path')
@@ -12,6 +12,14 @@ let dao = {
   // 增加
   add: async function(addJson) {
     let data = await model.create(addJson, {
+      logging: env.logging
+    })
+    return data
+  },
+
+  // 批量增加
+   batchCreate: async function(users) {
+    let data = await model.bulkCreate(users, {
       logging: env.logging
     })
     return data
@@ -32,19 +40,25 @@ let dao = {
   update: async function(updateJson = {}, whereJson = {}) {
     let data = await model.update(updateJson, {
       where: whereJson,
-      logging: env.logging
+      logging: env.logging,
+      attributes: {
+        exclude: ['password', 'created_at', 'deleted_at', 'updated_at', 'status' ]
+      }
     })
     return data
   },
 
-  // 搜索
-  search: async function(whereJson = {}) {
-    console.info(whereJson)
-    let data = await model.findOne({
-      where: whereJson
-    })
-    console.info(data)
+  // 查找
+  search: async function(whereJson = {}, needPass = false) {
 
+    const exclude = needPass ? ['password'] : []
+
+    let data = await model.findOne({
+      where: whereJson,
+      attributes: {
+        exclude: exclude
+      }
+    })
     return data
   },
 
@@ -54,13 +68,16 @@ let dao = {
       logging: env.logging,
       where: whereJson,
       offset: pageSize * (page - 1),
-      limit: pageSize
+      limit: pageSize,
+      attributes: {
+        exclude: ['password', 'created_at', 'deleted_at', 'updated_at', 'status' ]
+      }
     })
 
     return data
   },
 
-  // 搜索所有
+  // 模糊搜索
   all: async function(whereJson = {}) {
     let data = await model.findAndCountAll({
       logging: env.logging,
@@ -69,6 +86,7 @@ let dao = {
     return data
   },
 
+  // 求和
   sum: async function(column, whereJson) {
     let data = await model.sum(column, {
       where: whereJson
@@ -76,6 +94,7 @@ let dao = {
     return data
   },
 
+  // 统计
   count: async function() {
     let data = await model.count({
       logging: env.logging
@@ -83,6 +102,7 @@ let dao = {
     return data
   },
 
+  // 自增
   increment: async function(columnArray = [], whereJson = {}, by = 1) {
     let data = await model.increment(columnArray, {
       by: by,

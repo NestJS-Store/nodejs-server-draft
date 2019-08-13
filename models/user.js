@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-13 14:45:36
+ * @LastEditTime: 2019-08-13 19:34:36
  */
 var path = require('path')
 let sequelize = require('../config/sequelize')
@@ -22,7 +22,9 @@ const model = sequelize.define(
 
     phone: {
       type: sequelize.Sequelize.BIGINT,
-      comment: '手机号'
+      comment: '手机号',
+      unique: true
+
     },
 
     name: {
@@ -55,7 +57,8 @@ const model = sequelize.define(
     email: {
       type: sequelize.Sequelize.STRING,
       comment: '用户邮箱',
-      default: null
+      default: null,
+      unique: true
     },
     created: {
       defaultValue: sequelize.Sequelize.NOW,

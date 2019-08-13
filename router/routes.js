@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 13:33:38
+ * @LastEditTime: 2019-08-13 20:23:02
  */
 let routes = function(router) {
   // 定义控制器的路由映射
@@ -9,7 +9,8 @@ let routes = function(router) {
   let controller = {
     // ****** user 常用接口，登录，注册，查询，更新资料，修改密码 ******
     '/api/login': './user/login',
-    '/api/user/reg': './user/reg',
+    '/api/user/batchCreate': './user/batchCreate',
+    '/api/user/profile': './user/profile',
     '/api/user/list': './user/list',
     '/api/user/update': './user/update',
     '/api/user/search': './user/search',

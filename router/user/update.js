@@ -1,10 +1,12 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 17:40:25
+ * @LastEditTime: 2019-08-13 19:39:12
  */
 let path = require('path');
 let router = require('koa-router')();
 let Sequelize = require('sequelize');
+
+let md5 = require('../../utils/lib/md5');
 
 const STATUS = require('../../status/index');
 
@@ -13,20 +15,22 @@ const Op = Sequelize.Op
 
 let dao = require('../../dao/' + path.basename(__dirname));
 
-router.post('/', async function (ctx, next) {
+router.put('/', async function (ctx, next) {
 
   let get = ctx.request.query;
   let post = ctx.request.body;
 
-  // 暂时通过手机作为唯一标识进行更新
+  if (post.password) {
+    post.password = md5(post.password)
+  }
+
+  // 暂时通过作为 邮箱 唯一标识进行更新
   const where = {
     email: post.email,
   }
 
   const isExisted = await dao.search({
-    email: {
-      [Op.like]: '%' + post.email + '%'
-    }
+    email: post.email
   })
 
   if (isExisted) {

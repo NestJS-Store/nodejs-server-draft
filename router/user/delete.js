@@ -1,30 +1,27 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-13 10:55:58
+ * @LastEditTime: 2019-08-13 19:32:52
  */
 let path = require('path')
 let router = require('koa-router')()
-let Sequelize = require('sequelize')
-const Op = Sequelize.Op
 
 const STATUS = require('../../status/index');
 
 let dao = require('../../dao/' + path.basename(__dirname))
 
 router.post('/', async function(ctx, next) {
-  let get = ctx.request.query
   let post = ctx.request.body
 
-  console.info(post.email)
 
+  // FIXME: 区别 字符串 STRING 和 TEXT
+  const email = post.email
 
   whereJson = {
-    email: post.email
+    email: String(email)
   }
 
   const isExisted = await dao.search(whereJson)
 
-  console.info(isExisted)
   if (isExisted) {
 
     const whereJson = {
@@ -35,10 +32,10 @@ router.post('/', async function(ctx, next) {
       status: -1,
     }
 
-    // // 删除的就不能在更新
-    // await dao.update(updateJson, whereJson)
+    // 删除的就不能在更新
+    await dao.update(updateJson, whereJson)
 
-    // await dao.delete(post.email)
+    await dao.delete(post.email)
 
     return ctx.return(STATUS.User.DELETE_SUCCESS, 'User deleted success!', {})
   } else {

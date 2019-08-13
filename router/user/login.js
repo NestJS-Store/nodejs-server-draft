@@ -1,6 +1,6 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 17:32:32
+ * @LastEditTime: 2019-08-13 20:24:36
  */
 const STATUS = require('../../status/index');
 
@@ -23,8 +23,6 @@ router.post('/', async function (ctx, next) {
   if (!res_user) {
     return ctx.return(STATUS.Login.USER_NOT_EXIST, '用户不存在');
   }
-
-  console.info(res_user)
 
 
   const correct_pwd = res_user.password === md5(post.password) // 加密方式为：32位小写 MD5
