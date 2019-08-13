@@ -1,6 +1,13 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-12 17:40:25
+ */
 let path = require('path');
 let router = require('koa-router')();
 let Sequelize = require('sequelize');
+
+const STATUS = require('../../status/index');
+
 
 const Op = Sequelize.Op
 
@@ -13,20 +20,20 @@ router.post('/', async function (ctx, next) {
 
   // 暂时通过手机作为唯一标识进行更新
   const where = {
-    phone: post.phone,
+    email: post.email,
   }
 
   const isExisted = await dao.search({
-    phone: {
-      [Op.like]: '%' + post.phone + '%'
+    email: {
+      [Op.like]: '%' + post.email + '%'
     }
   })
 
   if (isExisted) {
     await dao.update(post, where);
-    return ctx.return(0, 'User updated success!', {});
+    return ctx.return(STATUS.Normal.SUCCESS, 'User updated success!', {});
   } else {
-    return ctx.return(-1, "User isn't found!", {});
+    return ctx.return(STATUS.User.USER_NOT_EXIST, "User isn't found!", {});
   }
 
 });

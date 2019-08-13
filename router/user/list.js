@@ -1,8 +1,14 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-12 17:31:28
+ */
 let path = require('path');
 let router = require('koa-router')();
 
 let Sequelize = require('sequelize')
 const Op = Sequelize.Op
+
+const STATUS = require('../../status/index');
 
 let dao = require('../../dao/' + path.basename(__dirname));
 
@@ -21,8 +27,8 @@ router.post('/', async function (ctx, next) {
 
   let res = await dao.list(whereJson, page, pageSize);
 
-  const data = 
-  res ? 
+  const data =
+  res ?
     {
       count: res.count,
       data: res.rows,
@@ -33,9 +39,9 @@ router.post('/', async function (ctx, next) {
     : null
 
     if  (data) {
-      return ctx.return(0, 'List success!', data);
+      return ctx.return(STATUS.Normal.SUCCESS, 'List success!', data);
     } else {
-      return ctx.return(-1, 'List failed!', data);
+      return ctx.return(STATUS.Normal.FAILED, 'List failed!', data);
     }
 
 });

@@ -1,0 +1,12 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-12 17:39:39
+ */
+
+module.exports = {
+  CREATE_SUCCESS: 'CREATE_SUCCESS',
+  USER_EXIST: 'USER_EXIST',
+  DELETE_SUCCESS: 'DELETE_SUCCESS',
+  USER_NOT_EXIST: 'USER_NOT_EXIST',
+  USER_UPDATE_SUCCESS: 'USER_UPDATE_SUCCESS'
+}

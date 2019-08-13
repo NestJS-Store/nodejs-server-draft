@@ -1,3 +1,7 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-13 11:03:37
+ */
 let Sequelize = require('sequelize')
 let path = require('path')
 let env = require('../config/env')
@@ -14,10 +18,10 @@ let dao = {
   },
 
   // 删除
-  delete: async function(phone = null) {
+  delete: async function(email = null) {
     let data = await model.destroy({
       where: {
-        phone: phone
+        email: email
       },
       logging: env.logging
     })
@@ -35,9 +39,12 @@ let dao = {
 
   // 搜索
   search: async function(whereJson = {}) {
+    console.info(whereJson)
     let data = await model.findOne({
       where: whereJson
     })
+    console.info(data)
+
     return data
   },
 

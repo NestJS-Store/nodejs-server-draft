@@ -1,3 +1,7 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-12 14:22:41
+ */
 let authConfig = require('../../config/loginAuth');
 let globalVariable = require('../../config/globalVariable');
 
@@ -25,7 +29,6 @@ let authHandler = async function (ctx, next) {
         } else {
             await next();
         }
-
     }
 
 }

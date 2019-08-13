@@ -1,18 +1,15 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 17:32:32
+ * @LastEditTime: 2019-08-12 17:37:26
  */
 const STATUS = require('../../status/index');
 
 let path = require('path');
-let router = require('koa-router')();
-let Sequelize = require('sequelize');
 
 let dao = require('../../dao/' + path.basename(__dirname));
 
-let md5 = require('../../utils/lib/md5');
 
-router.post('/', async function (ctx, next) {
+router.get('/', async function (ctx, next) {
 
   let post = ctx.request.body;
 
@@ -23,9 +20,6 @@ router.post('/', async function (ctx, next) {
   if (!res_user) {
     return ctx.return(STATUS.Login.USER_NOT_EXIST, '用户不存在');
   }
-
-  console.info(res_user)
-
 
   const correct_pwd = res_user.password === md5(post.password) // 加密方式为：32位小写 MD5
 

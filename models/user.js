@@ -1,3 +1,7 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-13 14:45:36
+ */
 var path = require('path')
 let sequelize = require('../config/sequelize')
 const env = require('../config/env')
@@ -22,7 +26,7 @@ const model = sequelize.define(
     },
 
     name: {
-      type: sequelize.Sequelize.TEXT,
+      type: sequelize.Sequelize.STRING,
       comment: '用户名'
     },
 
@@ -31,13 +35,25 @@ const model = sequelize.define(
       comment: '密码'
     },
 
+    department: {
+      type: sequelize.Sequelize.STRING,
+      comment: '部门',
+      defaultValue: null
+    },
+
+    avatar: {
+      type: sequelize.Sequelize.STRING,
+      comment: '头像',
+      defaultValue: null
+    },
+
     status: {
       type: sequelize.Sequelize.INTEGER,
       comment: '0为默认状态',
       defaultValue: 0
     },
     email: {
-      type: sequelize.Sequelize.TEXT,
+      type: sequelize.Sequelize.STRING,
       comment: '用户邮箱',
       default: null
     },
@@ -55,10 +71,10 @@ const model = sequelize.define(
 )
 
 /*
-* FIXME: 强制更新 table 
+* FIXME: 强制更新 table
 */
 
-model.sync({force: false }).then(() => {
+model.sync({force: true }).then(() => {
   console.info('user sync success!')
 })
 
