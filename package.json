@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "./node_modules/.bin/cross-env NODE_ENV=develop ./node_modules/.bin/nodemon app.js",
-    "pm2": "pm2 start app.js --watch -i max",
+    "pm2": "pm2 start app.js NODE_ENV=production --watch -i max",
     "test": "./node_modules/mocha/bin/mocha"
   },
   "author": "leiquan",

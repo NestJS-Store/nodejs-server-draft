@@ -1,10 +1,15 @@
+/*
+ * @LastEditors: Magic RVya (Jia Wei Ya)
+ * @LastEditTime: 2019-08-13 20:53:57
+ */
 const Sequelize = require('sequelize')
 
 const { mysql } = require('./env')
 
 const sequelize = new Sequelize(
-  mysql.databaseName, 
-  mysql.username, mysql.password,
+  mysql.databaseName,
+  mysql.username,
+  mysql.password,
   {
     host: mysql.host,
     port: mysql.port,
@@ -15,8 +20,7 @@ const sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000
     },
-    timezone: '+08:00',
-    operatorsAliases: false
+    timezone: '+08:00'
   }
 )
 

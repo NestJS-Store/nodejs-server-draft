@@ -1,13 +1,13 @@
 /*
  * @LastEditors: Magic RVya (Jia Wei Ya)
- * @LastEditTime: 2019-08-12 14:27:49
+ * @LastEditTime: 2019-08-14 17:24:26
  */
 let env = {
   dev: {
     mysql: {
       logging: true, // 是否打印数据库查询日志
       databaseName: 'test',
-      username: 'root',
+      username: 'remote',
       password: '123456789',
       host: '39.106.163.208',
       port: 3306,
@@ -40,10 +40,10 @@ let env = {
   online: {
     mysql: {
       logging: false, // 是否打印数据库查询日志
-      databaseName: '',
-      username: '',
-      password: '',
-      host: '',
+      databaseName: 'miraclesDB',
+      username: 'localhost',
+      password: '123456789',
+      host: '127.0.0.1',
       port: 3306,
       baseUrl: '',
       // table is need to force rewrite
@@ -73,11 +73,11 @@ let env = {
 
 let cfg = null
 
-if (process.env.NODE_ENV == 'develop') {
-  cfg = env.dev
+if (process.env.NODE_ENV == 'production') {
+  cfg = env.online
   console.log('测试环境配置')
 } else {
-  cfg = env.online // 默认为线上环境，简化线上服务器的配置
+  cfg = env.dev // 默认为线上环境，简化线上服务器的配置
   console.log('线上环境配置')
 }
 
