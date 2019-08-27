@@ -157,10 +157,11 @@ app.use(body({ multipart: true }))
 app.use(
   cors({
     origin: function(ctx) {
-      return '*' // 允许来自所有域名请求,上线后请注意配置
+      return '*'
     },
     credentials: true,
-    allowMethods: ['GET', 'POST']
+    allowMethods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
   })
 )
 
