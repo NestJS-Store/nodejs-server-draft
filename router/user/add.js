@@ -34,10 +34,9 @@ router.post('/', async function(ctx, next) {
       name,
       password: md5(password)
     })
-
   }
 
-  return ctx.return(STATUS.User.CREATE_SUCCESS, 'User added success!', {})
+  return ctx.return(STATUS.User.CREATE_SUCCESS, 'User added success!', data)
 
 })
 

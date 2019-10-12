@@ -16,6 +16,8 @@ router.post('/', async function (ctx, next) {
 
   let post = ctx.request.body;
 
+  console.info('post', post)
+
   let res_user = await dao.search({
     email: post.email
   });

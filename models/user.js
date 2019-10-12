@@ -27,7 +27,7 @@ const model = sequelize.define(
 
     },
 
-    name: {
+    username: {
       type: sequelize.Sequelize.STRING,
       comment: '用户名'
     },

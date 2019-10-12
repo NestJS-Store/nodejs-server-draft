@@ -91,11 +91,12 @@ app.proxy = true
 app.keys = ['I am a session key! My random number is 6291619!']
 
 // 挂载在 context 上的快捷方法：return，这里是统一进行错误相应的代码，正常情况建议使用 ctx.body 返回，错误情况用这个来返回
-app.context.return = function(status = -1, message = '', data = null) {
+app.context.return = function(status = -1, message = '', data = null, code = 0) {
   return (this.body = {
     status,
     message,
-    data
+    data,
+    code
   })
 }
 
